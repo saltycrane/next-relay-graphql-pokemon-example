@@ -1,3 +1,11 @@
-export default function IndexPage() {
-  return <div>IndexPage</div>;
+import withPageSetup from "./withPageSetup";
+
+function IndexPage() {
+  return (
+    <>
+      <h3>Pokemon TCG</h3>
+    </>
+  );
 }
+
+export default withPageSetup(IndexPage);
