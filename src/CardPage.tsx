@@ -99,8 +99,8 @@ function CardPage() {
         <i className="bi-chevron-right" /> <small>CARD:</small>{" "}
         <em>{data.card.name}</em>
       </h3>
-      <div className="d-flex align-items-start gap-4">
-        <img src={`${data.card.image}/high.webp`} height={825} width={600} />
+      <div className="d-flex align-items-start flex-wrap gap-4">
+        <img className="img-fluid" src={`${data.card.image}/high.webp`} />
         <Table bordered responsive size="sm">
           <tr>
             <th>Name</th>
