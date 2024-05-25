@@ -6,6 +6,8 @@ Quick and dirty Pokemon TCG web UI using the [TCGdex](https://github.com/tcgdex/
 
 ## Usage
 
+[Install Watchman](https://facebook.github.io/watchman/docs/install.html) for running the Relay compiler in "watch" mode. (On Mac: `brew install watchman`) 
+
 ```
 $ npm install
 $ npm run dev

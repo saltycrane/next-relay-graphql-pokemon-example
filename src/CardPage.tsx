@@ -4,6 +4,7 @@ import { graphql, useLazyLoadQuery } from "react-relay";
 import { Table } from "reactstrap";
 
 import { CardPageQuery } from "./__generated__/CardPageQuery.graphql";
+import { isNotNull } from "./isNotNull";
 import withPageSetup from "./withPageSetup";
 
 function CardPage() {
@@ -155,12 +156,12 @@ function CardPage() {
           </tr>
           <tr>
             <th>Types</th>
-            <td>{data.card.types.join(", ")}</td>
+            <td>{data.card.types?.join(", ")}</td>
           </tr>
           <tr>
             <th>Weaknesses</th>
             <td>
-              {data.card.weaknesses?.map((weakness) => (
+              {data.card.weaknesses?.filter(isNotNull).map((weakness) => (
                 <span key={weakness.type}>
                   {weakness.type} {weakness.value}
                 </span>
@@ -170,7 +171,7 @@ function CardPage() {
           <tr>
             <th>Resistances</th>
             <td>
-              {data.card.resistances?.map((resistance) => (
+              {data.card.resistances?.filter(isNotNull).map((resistance) => (
                 <span key={resistance.type}>
                   {resistance.type} {resistance.value}
                 </span>
@@ -180,7 +181,7 @@ function CardPage() {
           <tr>
             <th>Abilities</th>
             <td>
-              {data.card.abilities?.map((ability) => (
+              {data.card.abilities?.filter(isNotNull).map((ability) => (
                 <div key={ability.name}>
                   <strong>{ability.name}</strong>
                   <p>{ability.effect}</p>
@@ -191,11 +192,11 @@ function CardPage() {
           <tr>
             <th>Attacks</th>
             <td>
-              {data.card.attacks?.map((attack) => (
+              {data.card.attacks?.filter(isNotNull).map((attack) => (
                 <div key={attack.name}>
                   <strong>{attack.name}</strong>
                   <p>
-                    {attack.cost.join(", ")} {attack.damage}
+                    {attack.cost?.filter(isNotNull).join(", ")} {attack.damage}
                   </p>
                   <p>{attack.effect}</p>
                 </div>
@@ -234,8 +235,19 @@ function CardPage() {
             <th>Variants</th>
             <td>
               <div className="text-capitalize">
-                {["firstEdition", "holo", "normal", "reverse", "wPromo"]
-                  .filter((variantName) => data.card.variants[variantName])
+                {(
+                  [
+                    "firstEdition",
+                    "holo",
+                    "normal",
+                    "reverse",
+                    "wPromo",
+                  ] as const
+                )
+                  .filter(
+                    (variantName) =>
+                      data.card?.variants && data.card.variants[variantName],
+                  )
                   .join(", ")}
               </div>
             </td>

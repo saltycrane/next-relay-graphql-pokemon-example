@@ -4,6 +4,7 @@ import { graphql, useLazyLoadQuery } from "react-relay";
 import { Table } from "reactstrap";
 
 import { SeriePageQuery } from "./__generated__/SeriePageQuery.graphql";
+import { isNotNull } from "./isNotNull";
 import withPageSetup from "./withPageSetup";
 
 function SeriePage() {
@@ -30,6 +31,11 @@ function SeriePage() {
     `,
     { id: router.query.serieId as string },
   );
+
+  if (!data.serie) {
+    return <h3>Series not found</h3>;
+  }
+
   return (
     <>
       <h3>
@@ -47,10 +53,10 @@ function SeriePage() {
           </tr>
         </thead>
         <tbody>
-          {data.serie.sets.map((set) => (
+          {data.serie.sets.filter(isNotNull).map((set) => (
             <tr key={set.id}>
               <td>
-                <Link href={`/series/${data.serie.id}/sets/${set.id}`}>
+                <Link href={`/series/${data.serie?.id}/sets/${set.id}`}>
                   <div className="d-flex align-items-center gap-3">
                     <div
                       className="d-flex justify-content-center"

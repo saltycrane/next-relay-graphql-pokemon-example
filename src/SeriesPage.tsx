@@ -3,6 +3,7 @@ import { graphql, useLazyLoadQuery } from "react-relay";
 import { Table } from "reactstrap";
 
 import { SeriesPageQuery } from "./__generated__/SeriesPageQuery.graphql";
+import { isNotNull } from "./isNotNull";
 import withPageSetup from "./withPageSetup";
 
 function SeriesPage() {
@@ -23,7 +24,7 @@ function SeriesPage() {
       <h3>Pokemon TCG Series</h3>
       <Table responsive size="sm" striped>
         <tbody>
-          {data.series.map((serie) => (
+          {data.series?.filter(isNotNull).map((serie) => (
             <tr key={serie.id}>
               <td>
                 <Link href={`/series/${serie.id}`}>

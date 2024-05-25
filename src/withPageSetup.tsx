@@ -5,7 +5,7 @@ import { Container } from "reactstrap";
 import ErrorBoundary from "./ErrorBoundary";
 import { environment } from "./relay";
 
-export default function withPageSetup<TProps>(
+export default function withPageSetup<TProps extends Record<string, unknown>>(
   WrappedComponent: React.ComponentType<TProps>,
 ) {
   function WithPageSetup(props: TProps) {

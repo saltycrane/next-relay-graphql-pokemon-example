@@ -4,6 +4,7 @@ import { graphql, useLazyLoadQuery } from "react-relay";
 import { Table } from "reactstrap";
 
 import { SetPageQuery } from "./__generated__/SetPageQuery.graphql";
+import { isNotNull } from "./isNotNull";
 import withPageSetup from "./withPageSetup";
 
 function SetPage() {
@@ -62,11 +63,11 @@ function SetPage() {
           </tr>
         </thead>
         <tbody>
-          {data.set.cards.map((card) => (
+          {data.set.cards?.filter(isNotNull).map((card) => (
             <tr key={card.id}>
               <td>
                 <Link
-                  href={`/series/${data.set.serie.id}/sets/${data.set.id}/cards/${card.id}`}
+                  href={`/series/${data.set?.serie.id}/sets/${data.set?.id}/cards/${card.id}`}
                 >
                   <div className="d-flex align-items-center gap-3">
                     {card.image ? (
